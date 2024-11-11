@@ -1,8 +1,9 @@
-import './Footer.css';     
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function Footer() {
     return (
-      <footer>
+      <footer className="text-center py-3 bg-dark text-white mt-4">
         © 2021 - Pizzería Mamma Mía - Todos los derechos reservados
       </footer>
     );
