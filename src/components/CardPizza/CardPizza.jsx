@@ -1,8 +1,30 @@
+import React, { useState } from 'react';
 import './CardPizza.css';
+import { pizzaCart } from '../../Data/Pizza';
+
+const CardPizza = ({ pizza }) => {
+  const { name, image, price, ingredients } = pizza;
+
+  return (
+    <div className="card-pizza">
+      <img src={image} alt={name} />
+      <h2>{name}</h2>
+      <p>Precio: ${price}</p>
+      <ul>
+        {ingredients.map((ingredient, index) => (
+          <li key={index}>{ingredient}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default CardPizza;
 
 
 
-function CardPizza({ name, price, ingredients, img }) {
+
+/*function CardPizza({ name, price, ingredients, img }) {
     return (
       <div className="card" style={{ width: '18rem' }}>
         <img src={img} className="card-img-top" alt={name} />
@@ -15,7 +37,6 @@ function CardPizza({ name, price, ingredients, img }) {
         </div>
       </div>
     );
-  }
+  }*/
   
-  export default CardPizza;
   
