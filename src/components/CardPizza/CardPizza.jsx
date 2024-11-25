@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CardPizza.css';
-import { pizzaCart } from '../../Data/Pizza';
+import { pizzaCart } from '../Data/Pizza';
 
 const CardPizza = ({ pizza }) => {
   const { name, image, price, ingredients } = pizza;

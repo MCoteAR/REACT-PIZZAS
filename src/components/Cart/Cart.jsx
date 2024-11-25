@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import pizzaCart from "../../Data/Pizza"; // Ajusta la ruta según la ubicación de pizzas.js
+import pizzaCart from "../Data/Pizza"; // Ajusta la ruta según la ubicación de pizzas.js
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Cart.css";
 
