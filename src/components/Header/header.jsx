@@ -1,4 +1,4 @@
-import './Header.css';
+import '../../components/Header/Header.css';
 const Header = () => (
     <header className='header'>
       <h1>¡Pizzería Mamma Mía!</h1>

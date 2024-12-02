@@ -1,28 +1,36 @@
 import React from 'react';
-import Cart from './components/Cart/Cart';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Cart from './Page/Cart/Cart.jsx';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import Home from './components/Home/Home';
-import Register from './components/Register/Register';
-import Login from './components/LoginPage/LoginPage';
+import Home from './Page/Home/Home.jsx';
+import Register from './Page/Register/Register.jsx';
+import Login from './Page/LoginPage/LoginPage.jsx';
 import Pizza from './components/Data/Pizza.jsx';
+import Profile from './Page/Profile/Profile.jsx';
+import NotFound from './Page/NotFound/NotFound.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = () => {
   return (
-    <div>
+    <Router>
       <Navbar />
-      {/*<Home />
-      {/* <Register /> */}
-      {/* <Login /> */}
-      {/*<Cart />*/}
-      <Pizza/>
-      <Footer />
-
-     
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/pizza/p001" element={<Pizza />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 };
 
-export default App; 
+export default App;
+
+
+
+
 

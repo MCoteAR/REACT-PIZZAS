@@ -1,7 +1,7 @@
 /*import Header from '../Header/Header';
 import Pizza from "../../Data/Pizza.js";*/
-import Header from '../Header/Header';
-import CardPizza from '../CardPizza/CardPizza';
+import Header from '../../components/Header/header';
+import CardPizza from '../../Page/CardPizza/CardPizza';
 import React, { useState, useEffect } from "react";
 
 
