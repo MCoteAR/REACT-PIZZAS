@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer /> {/* Asegúrate de que Footer está aquí */}
+      <Footer /> 
     </Router>
   );
 };
