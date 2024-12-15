@@ -1,56 +1,49 @@
-/*import Header from '../Header/Header';
-import Pizza from "../../Data/Pizza.js";*/
-import Header from '../../components/Header/header';
-import CardPizza from '../CardPizza/CardPizza';
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Importa Link
+import { pizza } from "../../components/Data/PizzaData"; 
 
+import "../../Page/Home/Home.css";
 
 const Home = () => {
-  const [pizzas, setPizzas] = useState([]); 
+  const [pizzas, setPizzas] = useState([]);
+  const [error, setError] = useState(null);
 
-useEffect(() => {
-  const fetchPizzas = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/pizzas');
-      const data = await response.json();
-      setPizzas(data); 
-    } catch (error) {
-      console.error("Error fetching pizzas:", error);
-    }
-  };
+  useEffect(() => {
+    fetch("http://localhost:5001/api/pizzas")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al obtener las pizzas");
+        }
+        return response.json();
+      })
+      .then((data) => setPizzas(data))
+      .catch((error) => setError(error.message));
+  }, []);
 
-  fetchPizzas();
-}, []);
-
-return (
-  <>
-    <Header />
-    <div className="container">
-      <div className="row justify-content-center">
-        {pizzas.length > 0 ? ( 
-          pizzas.map((pizza) => (
-            <div
-              key={pizza.id}
-              className="col-12 col-md-6 col-lg-4 d-flex justify-content-center mb-4">
-              <CardPizza
-                name={pizza.name}
-                price={pizza.price}
-                ingredients={pizza.ingredients}
-                img={pizza.img}
-                idpizza={pizza.id}
-              />
-            </div>
-          ))
-        ) : (
-          <p>Cargando pizzas...</p>
-        )}
+  if (error) {
+    return <div className="alert alert-danger text-center">{error}</div>;
+  }
+  return (
+    <div className="home d-flex justify-content-center align-items-center">
+      <div className="overlay text-center text-white p-4 rounded">
+        <h1 className="display-3 font-weight-bold">
+          Bienvenido a Pizzería Mamma Mía
+        </h1>
+        <p className="lead">Las mejores pizzas, ¡recién horneadas para ti!</p>
+        {/* Cambiar de <a> a <Link> */}
+        <Link to="/pizzas" className="btn btn-lg btn-primary">
+          Ver Pizzas
+        </Link>
       </div>
     </div>
-  </>
-);
+  );
 };
 
 export default Home;
+
+
+
+
 
 
 

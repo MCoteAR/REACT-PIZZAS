@@ -1,93 +1,118 @@
 import React, { useState } from "react";
-import pizzaCart from "../../components/Data/Pizza"; 
-import {useCart} from '../../CartContext/CartContext';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Cart.css";
+import { useUserContext } from "../../Context/UserContext";
+import { pizza } from "../../components/Data/PizzaData"; // Importa el array de todas las pizzas
 
 const Cart = () => {
-  const [cart, setCart] = useState(pizzaCart);
+  const { token } = useUserContext();
 
-  const incrementQuantity = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+  // Estado inicial para manejar las cantidades de cada pizza
+  const [cart, setCart] = useState(
+    pizza.map((item) => ({ ...item, count: 1 })) // Añadimos count a cada pizza
+  );
+
+  // Incrementar cantidad
+  const increaseCount = (id) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, count: item.count + 1 } : item
       )
     );
   };
 
-  const decrementQuantity = (id) => {
-    setCart(
-      cart
+  // Decrementar cantidad
+  const decreaseCount = (id) => {
+    setCart((prevCart) =>
+      prevCart
         .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+          item.id === id && item.count > 0
+            ? { ...item, count: item.count - 1 }
+            : item
         )
-        .filter((item) => item.quantity > 0)
+        .filter((item) => item.count > 0) // Eliminar si la cantidad llega a 0
     );
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Calcular total del carrito
+  const calculateTotal = () => {
+    return cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  };
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Carrito de Compras</h2>
-      <div className="row">
-        {cart.map((item) => (
-          <div key={item.id} className="col-md-12 mb-3">
-            <div className="card">
-              <div className="row g-0">
-                <div className="col-md-2">
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="img-fluid rounded-start"
-                  />
-                </div>
-                <div className="col-md-8">
-                  <div className="card-body">
-                    <h5 className="card-title">{item.name}</h5>
-                    <p className="card-text">Precio: ${item.price}</p>
-                    <p className="card-text">
-                      Cantidad:{" "}
-                      <button
-                        className="btn btn-outline-secondary btn-sm mx-1"
-                        onClick={() => decrementQuantity(item.id)}
-                      >
-                        -
-                      </button>
-                      <span>{item.quantity}</span>
-                      <button
-                        className="btn btn-outline-secondary btn-sm mx-1"
-                        onClick={() => incrementQuantity(item.id)}
-                      >
-                        +
-                      </button>
-                    </p>
-                  </div>
-                </div>
-                <div className="col-md-2 d-flex align-items-center justify-content-center">
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => decrementQuantity(item.id)}
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">Carrito de Compras</h1>
+
+      {cart.length === 0 ? (
+        <div className="alert alert-info text-center" role="alert">
+          Tu carrito está vacío.
+        </div>
+      ) : (
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead className="table-dark">
+              <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item) => (
+                <tr key={item.id}>
+                  <td>
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      style={{ width: "80px", height: "auto" }}
+                      className="rounded"
+                    />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>${item.price}</td>
+                  <td>{item.count}</td>
+                  <td>${item.price * item.count}</td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-danger me-2"
+                      onClick={() => decreaseCount(item.id)}
+                    >
+                      -
+                    </button>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => increaseCount(item.id)}
+                    >
+                      +
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <div className="text-end mt-3">
+        <h3>Total: ${calculateTotal()}</h3>
       </div>
-      <div className="row mt-4">
-        <div className="col-md-6">
-          <h4>Total: ${total.toFixed(2)}</h4>
-        </div>
-        <div className="col-md-6 text-end">
-          <button className="btn btn-success">Pagar</button>
-        </div>
+
+      <div className="text-center mt-4">
+        <button className="btn btn-primary" disabled={!token}>
+          Pagar
+        </button>
+        {!token && (
+          <div className="alert alert-warning mt-2">
+            Para realizar el pago, por favor inicie sesión.
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default Cart;
+
+
 

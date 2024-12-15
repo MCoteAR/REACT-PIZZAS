@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CardPizza.css';
 import { useCart } from '../../CartContext/CartContext';
 
-
 const CardPizza = ({ pizza }) => {
-  const { name, image, price, ingredients } = pizza;
-  const {addToCart} = useCart();
-  const handledAddToCart = () => {
-    addToCart (pizza);
-  };
+  const { name = 'Sin nombre', image, price = 0, ingredients = [] } = pizza;
+  const { addToCart } = useCart();
 
   return (
     <div className="card-pizza">
@@ -20,7 +16,7 @@ const CardPizza = ({ pizza }) => {
           <li key={index}>{ingredient}</li>
         ))}
       </ul>
-      <button className= "btn btn-primary" onClick={handledAddToCart}>
+      <button className="btn btn-primary" onClick={() => addToCart(pizza)}>
         Añadir al carrito
       </button>
     </div>
@@ -28,6 +24,7 @@ const CardPizza = ({ pizza }) => {
 };
 
 export default CardPizza;
+
 
 
 

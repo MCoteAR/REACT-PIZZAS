@@ -1,10 +1,10 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {useCart} from '../../CartContext/CartContext';
-import './Navbar.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useUserContext } from "../../Context/UserContext"; // Importar el hook personalizado
 
 const Navbar = () => {
+  const { token, logout } = useUserContext(); // Accede al estado `token` y al método `logout`
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -24,19 +24,15 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
+            {/* Siempre visibles */}
             <li className="nav-item">
               <Link className="nav-link" to="/">
                 Inicio
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Registro
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Iniciar Sesión
+              <Link className="nav-link" to="/total">
+                Total
               </Link>
             </li>
             <li className="nav-item">
@@ -44,12 +40,39 @@ const Navbar = () => {
                 🛒 Carrito
               </Link>
             </li>
-            <li className="nav-item">
-              {/* Enlace del error */}
-              <Link className="nav-link" to="/ruta-inexistente">
-                Error 404
-              </Link>
-            </li>
+
+            {/* Si el usuario está autenticado */}
+            {token ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/profile">
+                    Perfil
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={logout} // Llama al método logout
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              // Si el usuario NO está autenticado
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Iniciar Sesión
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Registro
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
@@ -58,6 +81,8 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
 
 
 

@@ -17,15 +17,7 @@ export const pizza = [
       name: "Española",
       price: 7250,
     },
-    {
-      desc: "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
-      id: "P003",
-      img: "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3",
-      ingredients: ["mozzarella", "tomates", "salame", "orégano"],
-      quantity:1,
-      name: "Salame",
-      price: 5990,
-    },
+    
     {
       desc: "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal (a veces aceite de oliva) que comúnmente se cubre con salsa de tomate, queso y otros muchos ingredientes, y que se hornea a alta temperatura, tradicionalmente en un horno de leña.",
       id: "P004",
@@ -71,13 +63,7 @@ export const pizza = [
       count: 1,
       img: "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fcheese-164872_640_com.jpg?alt=media&token=18b2b821-4d0d-43f2-a1c6-8c57bc388fab",
     },
-    {
-      id: "P003",
-      name: "Salame",
-      price: 5990,
-      count: 1,
-      img: "",
-    }
+   
   ];
   
   export default pizza;
